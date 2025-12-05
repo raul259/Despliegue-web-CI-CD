@@ -5,8 +5,19 @@ import { useEffect, useState } from "react";
 export default function IntroLoader({ onFinish }: { onFinish: () => void }) {
   const [progress, setProgress] = useState(0);
   const [isFading, setIsFading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Generar valores fijos para evitar hydration error
+  const [squareAnimations] = useState(() => 
+    Array.from({ length: 20 }, () => ({
+      delay: Math.random() * 2,
+      duration: 1 + Math.random(),
+      opacity: Math.random() > 0.5 ? 1 : 0.3,
+    }))
+  );
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -23,8 +34,7 @@ export default function IntroLoader({ onFinish }: { onFinish: () => void }) {
     return () => clearInterval(interval);
   }, [onFinish]);
 
-  // Grid de cuadrados que cubren toda la pantalla
-  const squares = Array.from({ length: 20 }); // 5 columnas x 4 filas
+  if (!mounted) return null;
 
   return (
     <div
@@ -34,14 +44,14 @@ export default function IntroLoader({ onFinish }: { onFinish: () => void }) {
     >
       {/* Grid de cuadrados que ocupa toda la pantalla */}
       <div className="absolute inset-0 grid grid-cols-5 gap-3 p-8">
-        {squares.map((_, i) => (
+        {squareAnimations.map((anim, i) => (
           <div
             key={i}
             className="bg-cyan-500/20 rounded-lg animate-pulse border border-cyan-500/10"
             style={{
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${1 + Math.random()}s`,
-              opacity: Math.random() > 0.5 ? 1 : 0.3,
+              animationDelay: `${anim.delay}s`,
+              animationDuration: `${anim.duration}s`,
+              opacity: anim.opacity,
             }}
           />
         ))}

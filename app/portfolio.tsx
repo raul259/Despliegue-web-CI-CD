@@ -176,6 +176,13 @@ export default function Portfolio() {
       console.log("Ejecutando renderProjects...");
       const projects = [
         {
+          title: "Landing Bio",
+          description: "Página de perfil personal con diseño moderno, enlaces personalizados y animaciones suaves.",
+          tags: ["Next.js", "React", "CSS"],
+          image: "/bio core.png",
+          url: "https://landing-bio-core-1qxk.vercel.app"
+        },
+        {
           title: "SUDÁN FREE",
           description: "Landing page moderna sobre la crisis humanitaria en Sudán con diseño impactante y responsive.",
           tags: ["React", "Next.js", "CSS"],
@@ -183,22 +190,11 @@ export default function Portfolio() {
           url: "https://landing-sud-n-git-main-raul259s-projects.vercel.app/"
         },
         {
-          title: "E-Commerce Platform",
-          description: "Tienda online completa con carrito de compras, gestión de productos y panel de administración.",
-          tags: ["React", "Node.js", "MySQL"],
-          emoji: "🛒",
-        },
-        {
-          title: "Task Manager App",
-          description: "Aplicación de gestión de tareas con autenticación, categorías y recordatorios.",
-          tags: ["JavaScript", "PHP", "CSS"],
-          emoji: "✅",
-        },
-        {
-          title: "Portfolio Personal",
-          description: "Sitio web personal con efectos 3D, animaciones y diseño responsive.",
-          tags: ["HTML", "CSS", "JavaScript"],
-          emoji: "💼",
+          title: "LLM Chat  AI",
+          description: "Aplicación de chat con inteligencia artificial usando modelos de lenguaje avanzados.",
+          tags: ["Next.js", "TypeScript", "AI"],
+          image: "/llm-chat.png",
+          url: "https://llm-chat-ruby.vercel.app"
         },
       ];
 
@@ -220,7 +216,7 @@ export default function Portfolio() {
           });
         }
         card.innerHTML = `
-          <div class="project-image">${project.image ? `<img src="${project.image}" alt="${project.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">` : project.emoji}</div>
+          <div class="project-image">${project.image ? `<img src="${project.image}" alt="${project.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">` : ''}</div>
           <div class="project-content">
             <div class="project-title">${project.title}</div>
             <div class="project-description">${project.description}</div>
@@ -313,20 +309,28 @@ export default function Portfolio() {
 
       const aboutText = document.querySelector('#sobreMiTexto');
       if (aboutText) {
-        gsap.fromTo(aboutText,
-          { opacity: 0, x: -50 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: aboutText,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
+        const text = aboutText.textContent || '';
+        aboutText.textContent = '';
+        aboutText.style.opacity = '1';
+        
+        const chars = text.split('');
+        let charIndex = 0;
+        
+        ScrollTrigger.create({
+          trigger: aboutText,
+          start: "top 85%",
+          onEnter: () => {
+            const typeInterval = setInterval(() => {
+              if (charIndex < chars.length) {
+                aboutText.textContent += chars[charIndex];
+                charIndex++;
+              } else {
+                clearInterval(typeInterval);
+              }
+            }, 20);
+          },
+          once: true
+        });
       }
 
       const timelineItems = document.querySelectorAll('.timeline-item');
@@ -409,8 +413,22 @@ export default function Portfolio() {
               RAÚL SUÁREZ
             </h1>
             <p className="hero-subtitle" id="subtitulo">
-              Desarrollador Web & Apasionado por la Tecnología
+              Desarrollador Full Stack en formación. Especializado en crear experiencias web rápidas con Next.js y Supabase.
             </p>
+            <div className="hero-buttons">
+              <button 
+                className="hero-btn hero-btn-primary"
+                onClick={() => document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Ver Proyectos
+              </button>
+              <button 
+                className="hero-btn hero-btn-secondary"
+                onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Contáctame
+              </button>
+            </div>
           </div>
           <div className="scroll-indicator">
             <svg viewBox="0 0 24 24">
@@ -423,8 +441,7 @@ export default function Portfolio() {
           <div className="about-content">
             <div className="about-text">
               <p id="sobreMiTexto">
-                Transformando código limpio en aplicaciones funcionales.
-                Estudiante de 2º DAW enfocado en arquitecturas escalables y buenas prácticas.
+Desarrollador junior y estudiante de 2º de DAW. He desarrollado proyectos como una Pokedéx web, sistemas CRUD y aplicaciones responsive. Manejo JavaScript, PHP, MySQL, Bootstrap y GSAP, y actualmente profundizo en tecnologías modernas como Node.js, React, Next.js, Vercel e integración con IA. Mi objetivo es crear soluciones web sólidas, limpias y escalables.
               </p>
             </div>
           </div>
@@ -441,24 +458,19 @@ export default function Portfolio() {
           <h2 className="section-title">Formación</h2>
           <div className="timeline">
             <div className="timeline-item">
-              <div className="timeline-year">2023 - 2025</div>
+              <div className="timeline-year">2024 - 2026</div>
               <div className="timeline-title">Desarrollo de Aplicaciones Web (DAW)</div>
               <div className="timeline-description">
                 Ciclo Formativo de Grado Superior enfocado en el desarrollo de aplicaciones web frontend y backend.
+                Formación en JavaScript, PHP, MySQL, HTML, CSS, Bootstrap, GSAP, consumo de APIs, despliegue web y fundamentos de programación.
               </div>
             </div>
             <div className="timeline-item">
-              <div className="timeline-year">2022 - 2023</div>
-              <div className="timeline-title">Certificación en JavaScript Avanzado</div>
+              <div className="timeline-year">2024 - 2025</div>
+              <div className="timeline-title">Desarrollo con Frameworks Modernos</div>
               <div className="timeline-description">
-                Curso especializado en JavaScript moderno, frameworks y mejores prácticas de desarrollo.
-              </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-year">2021 - 2023</div>
-              <div className="timeline-title">Bachillerato Tecnológico</div>
-              <div className="timeline-description">
-                Especialización en tecnologías de la información y ciencias de la computación.
+                Aprendizaje práctico y continuo de Node.js, React, Next.js, Vercel, integración con APIs, automatización de procesos e interacción con Inteligencia Artificial.
+                Enfocado en construir aplicaciones funcionales, modernas y escalables.
               </div>
             </div>
           </div>
@@ -504,10 +516,8 @@ export default function Portfolio() {
               </p>
             </div>
           </div>
-        </section>
 
-        <section id="tecnologias" className="tech-section-fullwidth">
-          <div className="logo-loop-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '300px' }}>
+          <div className="logo-loop-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '60px' }}>
             <LogoLoop
               logos={[
                 {
