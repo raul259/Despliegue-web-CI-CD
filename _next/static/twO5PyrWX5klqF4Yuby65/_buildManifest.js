@@ -3,8 +3,8 @@ self.__BUILD_MANIFEST = {
     "afterFiles": [],
     "beforeFiles": [
       {
-        "source": "/ejercicio-alumnos//_next/:path+",
-        "destination": "/ejercicio-alumnos/_next/:path+"
+        "source": "/Despliegue-web-CI-CD//_next/:path+",
+        "destination": "/Despliegue-web-CI-CD/_next/:path+"
       }
     ],
     "fallback": []
