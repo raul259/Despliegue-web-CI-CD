@@ -1,4 +1,4 @@
-name: Deploy Next.js to GitHub Pages
+name: Deploy Next (static export) to GitHub Pages
 
 on:
   push:
@@ -21,19 +21,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
-        run: npm run build
+        run: DEPLOY_TARGET=github npm run build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages
-          path: out 
+          name: out
+          path: out
 
   deploy:
     needs: build
@@ -44,7 +43,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: out
           path: out
 
       - name: Deploy to GitHub Pages
@@ -52,3 +51,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
+          enable_jekyll: false
